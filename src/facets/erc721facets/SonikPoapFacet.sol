@@ -238,28 +238,26 @@ contract SonikPoapFacet is ERC721URIStorage {
         view
         returns (
             string memory _baseURI,
-            string memory name,
+            string memory _name,
             address creatorAddress,
             uint256 totalClaimed,
             uint256 totalClaimable,
-            uint256 pectanageClaimed,
             uint256 _creationTime,
-            bool _hasUserClaimedAirdrop
+            uint256 _airdropEndTime,
+            bool _hasUserClaimedAirdrop,
+            address nftAddressRequired // will be addres zero if no nft is required
         )
     {
         return (
             baseURI,
-            _name,
+            name(),
             owner,
             totalNoOfClaimed,
             totalNoOfClaimers,
-            getPercentage(totalNoOfClaimed, totalNoOfClaimers),
             creationTime,
-            hasUserClaimedAirdrop[user]
+            airdropEndTime,
+            hasUserClaimedAirdrop[user],
+            nftAddress
         );
-    }
-
-    function getPercentage(uint256 x, uint256 y) public pure returns (uint256) {
-        return (x * 10000 / y);
     }
 }

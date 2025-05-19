@@ -280,13 +280,14 @@ contract SonikDrop {
             address creatorAddress,
             uint256 totalClaimed,
             uint256 totalClaimable,
-            uint256 pectanageClaimed,
             uint256 totalClaimedtoken,
             uint256 totalClaimabletoken,
-            uint256 pectanageClaimedtoken,
             uint256 _creationTime,
+            uint256 _airdropEndTime, // will return turn 0 if is not time lock
             bool _hasOwnerWithdrawn,
-            bool _hasUserClaimedAirdrop
+            bool _hasUserClaimedAirdrop,
+            address nftAddressRequired, // will be addres zero if no nft is required
+            address _tokenAddress
         )
     {
         return (
@@ -294,17 +295,14 @@ contract SonikDrop {
             owner,
             totalNoOfClaimed,
             totalNoOfClaimers,
-            getPercentage(totalNoOfClaimed, totalNoOfClaimers),
-            totalOutputTokens,
             totalAmountSpent,
-            getPercentage(totalAmountSpent, totalOutputTokens),
+            totalOutputTokens,
             creationTime,
+            airdropEndTime,
             hasOwnerWithdrawn,
-            hasUserClaimedAirdrop[user]
+            hasUserClaimedAirdrop[user],
+            nftAddress,
+            tokenAddress
         );
-    }
-
-    function getPercentage(uint256 x, uint256 y) public pure returns (uint256) {
-        return (x * 10000 / y);
     }
 }

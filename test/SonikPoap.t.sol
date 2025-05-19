@@ -23,14 +23,24 @@ contract SonikPoapFacetTest is GetProof {
     address badUser;
     uint256 keybadUser;
     address owner;
-    bytes32 merkleRoot = 0xb7e09bf66d126c65602696df7f0526fd503a159828d1f8cef4959baca1512160;
+    bytes32 merkleRoot =
+        0xd8e222b40239d64a7db7ecda5afc3c65bf70597764a238cca5adf9d7356a9887;
     bytes32 hash = keccak256("claimed sonik droppppppppppp");
     string baseURI = "https://sonik.com/";
 
     function setUp() public {
         owner = msg.sender;
-        sonikPoapFacet =
-            new SonikPoapFacet("TESTNFT", "TNFT", baseURI, msg.sender, merkleRoot, address(0), 0, 10, false);
+        sonikPoapFacet = new SonikPoapFacet(
+            "TESTNFT",
+            "TNFT",
+            baseURI,
+            msg.sender,
+            merkleRoot,
+            address(0),
+            0,
+            10,
+            false
+        );
         testERC721 = new TestERC721();
         (user1, keyUser1) = makeAddrAndKey("user1");
         (user2, keyUser2) = makeAddrAndKey("user2");
@@ -38,10 +48,8 @@ contract SonikPoapFacetTest is GetProof {
     }
 
     function test_hasAidropTimeEnded() public {
-        // by default the airdropEND time is  block.timestamp (deployment time) if it is not time locked
         //  the airdrop is not time locked by default
-        vm.warp(block.timestamp + 1);
-        assertEq(sonikPoapFacet.hasAirdropTimeEnded(), true);
+        assertEq(sonikPoapFacet.hasAirdropTimeEnded(), false);
     }
 
     function test_hasAidropTimeEndedWithTimeLock() public {
@@ -184,9 +192,10 @@ contract SonikPoapFacetTest is GetProof {
     function test_claimAirdropNFT_with_time_lock_on() public {
         vm.prank(owner);
         sonikPoapFacet.updateClaimTime(1 days);
+
+        vm.startPrank(user1);
         bytes32[] memory proof = getProofPoap(user1);
         bytes memory signature = get_signa(keyUser1);
-        vm.startPrank(user1);
         vm.warp(2 days);
         vm.expectRevert(abi.encodeWithSignature("AirdropClaimEnded()"));
         sonikPoapFacet.claimAirdrop(proof, hash, signature);

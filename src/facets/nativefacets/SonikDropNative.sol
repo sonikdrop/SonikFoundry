@@ -120,12 +120,17 @@ contract SonikDropNative is ReentrancyGuard {
     /// @param _amount Amount of NativeCoins to claim
     /// @param _merkleProof Merkle proof for validation
     /// @return bool True if user is eligible
-    function checkEligibility(uint256 _amount, bytes32[] calldata _merkleProof) public view returns (bool) {
+    function checkEligibility(
+        uint256 _amount,
+        bytes32[] calldata _merkleProof
+    ) public view returns (bool) {
         if (hasUserClaimedAirdrop[msg.sender]) {
             return false;
         }
 
-        bytes32 leaf = keccak256(bytes.concat(keccak256(abi.encode(msg.sender, _amount))));
+        bytes32 leaf = keccak256(
+            bytes.concat(keccak256(abi.encode(msg.sender, _amount)))
+        );
 
         return MerkleProof.verify(_merkleProof, merkleRoot, leaf);
     }
@@ -134,7 +139,10 @@ contract SonikDropNative is ReentrancyGuard {
     /// @param digest Message hash to verify
     /// @param signature Signature to verify
     /// @return bool True if signature is valid
-    function _verifySignature(bytes32 digest, bytes memory signature) private view returns (bool) {
+    function _verifySignature(
+        bytes32 digest,
+        bytes memory signature
+    ) private view returns (bool) {
         return ECDSA.recover(digest, signature) == msg.sender;
     }
 
@@ -143,12 +151,20 @@ contract SonikDropNative is ReentrancyGuard {
     /// @param _merkleProof Proof of eligibility
     /// @param digest Message hash for signature verification
     /// @param signature User's signature
-    function claimAirdrop(uint256 _amount, bytes32[] calldata _merkleProof, bytes32 digest, bytes memory signature)
-        external
-        nonReentrant
-    {
+    function claimAirdrop(
+        uint256 _amount,
+        bytes32[] calldata _merkleProof,
+        bytes32 digest,
+        bytes memory signature
+    ) external nonReentrant {
         if (isNftRequired) {
-            claimAirdrop(_amount, _merkleProof, type(uint256).max, digest, signature);
+            claimAirdrop(
+                _amount,
+                _merkleProof,
+                type(uint256).max,
+                digest,
+                signature
+            );
             return;
         }
         _claimAirdrop(_amount, _merkleProof, digest, signature);
@@ -169,7 +185,10 @@ contract SonikDropNative is ReentrancyGuard {
     ) public nonReentrant {
         require(_tokenId == type(uint256).max, Errors.InvalidTokenId());
 
-        require(IERC721(nftAddress).balanceOf(msg.sender) > 0, Errors.NFTNotFound());
+        require(
+            IERC721(nftAddress).balanceOf(msg.sender) > 0,
+            Errors.NFTNotFound()
+        );
         _claimAirdrop(_amount, _merkleProof, digest, signature);
     }
 
@@ -178,18 +197,30 @@ contract SonikDropNative is ReentrancyGuard {
     /// @param _merkleProof Proof of eligibility
     /// @param digest Message hash for signature verification
     /// @param signature User's signature
-    function _claimAirdrop(uint256 _amount, bytes32[] calldata _merkleProof, bytes32 digest, bytes memory signature)
-        internal
-    {
+    function _claimAirdrop(
+        uint256 _amount,
+        bytes32[] calldata _merkleProof,
+        bytes32 digest,
+        bytes memory signature
+    ) internal {
         // verify user signature
         require(_verifySignature(digest, signature), Errors.InvalidSignature());
 
         // checks if User is eligible
         require(checkEligibility(_amount, _merkleProof), Errors.InvalidClaim());
-        require(!isTimeLocked || !hasAirdropTimeEnded(), Errors.AirdropClaimEnded());
+        require(
+            !isTimeLocked || !hasAirdropTimeEnded(),
+            Errors.AirdropClaimEnded()
+        );
         uint256 _currentNoOfClaims = totalNoOfClaimed;
-        require(_currentNoOfClaims + 1 <= totalNoOfClaimers, Errors.TotalClaimersExceeded());
-        require(getContractBalance() >= _amount, Errors.InsufficientContractBalance());
+        require(
+            _currentNoOfClaims + 1 <= totalNoOfClaimers,
+            Errors.TotalClaimersExceeded()
+        );
+        require(
+            getContractBalance() >= _amount,
+            Errors.InsufficientContractBalance()
+        );
 
         unchecked {
             ++totalNoOfClaimed;
@@ -199,7 +230,7 @@ contract SonikDropNative is ReentrancyGuard {
 
         totalAmountSpent = totalAmountSpent + _amount;
 
-        (bool success,) = msg.sender.call{value: _amount}("");
+        (bool success, ) = msg.sender.call{value: _amount}("");
         require(success, Errors.TransferFailed());
         emit Events.AirdropClaimed(msg.sender, _amount);
     }
@@ -218,7 +249,7 @@ contract SonikDropNative is ReentrancyGuard {
         }
         hasOwnerWithdrawn = true;
 
-        (bool success,) = owner.call{value: contractBalance}("");
+        (bool success, ) = owner.call{value: contractBalance}("");
         require(success, Errors.TransferFailed());
 
         emit Events.WithdrawalSuccessful(msg.sender, contractBalance);
@@ -269,7 +300,9 @@ contract SonikDropNative is ReentrancyGuard {
         emit Events.ClaimTimeUpdated(msg.sender, _claimTime, airdropEndTime);
     }
 
-    function getDropInfo()
+    function getDropInfo(
+        address user
+    )
         public
         view
         returns (
@@ -277,12 +310,13 @@ contract SonikDropNative is ReentrancyGuard {
             address creatorAddress,
             uint256 totalClaimed,
             uint256 totalClaimable,
-            uint256 pectanageClaimed,
             uint256 totalClaimedtoken,
             uint256 totalClaimabletoken,
-            uint256 pectanageClaimedtoken,
             uint256 _creationTime,
-            bool _hasOwnerWithdrawn
+            uint256 _airdropEndTime, // will return turn 0 if is not time lock
+            bool _hasOwnerWithdrawn,
+            bool _hasUserClaimedAirdrop,
+            address nftAddressRequired // will be addres zero if no nft is required
         )
     {
         return (
@@ -290,16 +324,13 @@ contract SonikDropNative is ReentrancyGuard {
             owner,
             totalNoOfClaimed,
             totalNoOfClaimers,
-            getPercentage(totalNoOfClaimed, totalNoOfClaimers),
-            totalOutputNativeCoins,
             totalAmountSpent,
-            getPercentage(totalAmountSpent, totalOutputNativeCoins),
+            totalOutputNativeCoins,
             creationTime,
-            hasOwnerWithdrawn
+            airdropEndTime,
+            hasOwnerWithdrawn,
+            hasUserClaimedAirdrop[user],
+            nftAddress
         );
-    }
-
-    function getPercentage(uint256 x, uint256 y) public pure returns (uint256) {
-        return (x * 10000 / y);
     }
 }
