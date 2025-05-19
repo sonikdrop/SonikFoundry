@@ -47,32 +47,19 @@ contract FactoryFacetNative {
             revert();
         }
 
-        SonikDropNative _newSonik = new SonikDropNative(
-            msg.sender,
-            _merkleRoot,
-            _name,
-            _nftAddress,
-            _claimTime,
-            _noOfClaimers,
-            _totalTotalETH
-        );
+        SonikDropNative _newSonik =
+            new SonikDropNative(msg.sender, _merkleRoot, _name, _nftAddress, _claimTime, _noOfClaimers, _totalTotalETH);
 
-        ownerToSonikDropNativeCloneContracts[msg.sender].push(
-            address(_newSonik)
-        );
+        ownerToSonikDropNativeCloneContracts[msg.sender].push(address(_newSonik));
 
         allSonikDropNativeClones.push(address(_newSonik));
 
         unchecked {
             ++cloneCount;
         }
-        (bool success, ) = address(_newSonik).call{value: _totalTotalETH}("");
+        (bool success,) = address(_newSonik).call{value: _totalTotalETH}("");
         require(success, Errors.TransferFailed());
-        emit Events.SonikCloneCreated(
-            msg.sender,
-            block.timestamp,
-            address(_newSonik)
-        );
+        emit Events.SonikCloneCreated(msg.sender, block.timestamp, address(_newSonik));
 
         return address(_newSonik);
     }
@@ -91,15 +78,7 @@ contract FactoryFacetNative {
         uint256 _noOfClaimers,
         uint256 _totalOutputTokens
     ) external payable returns (address) {
-        return
-            _createSonikDropNative(
-                _merkleRoot,
-                _name,
-                _nftAddress,
-                0,
-                _noOfClaimers,
-                _totalOutputTokens
-            );
+        return _createSonikDropNative(_merkleRoot, _name, _nftAddress, 0, _noOfClaimers, _totalOutputTokens);
     }
 
     /// @notice Creates a new SonikDropNative without NFT gating
@@ -115,33 +94,19 @@ contract FactoryFacetNative {
         uint256 _noOfClaimers,
         uint256 _totalOutputTokens
     ) external payable returns (address) {
-        return
-            _createSonikDropNative(
-                _merkleRoot,
-                _name,
-                address(0),
-                0,
-                _noOfClaimers,
-                _totalOutputTokens
-            );
+        return _createSonikDropNative(_merkleRoot, _name, address(0), 0, _noOfClaimers, _totalOutputTokens);
     }
 
     /// @notice Retrieves all SonikDropNative clones created by a specific owner
     /// @param _owner Address of the owner
     /// @return Array of addresses of SonikDropNative clones owned by the specified address
-    function getOwnerSonikDropNativeClones(
-        address _owner
-    ) external view returns (address[] memory) {
+    function getOwnerSonikDropNativeClones(address _owner) external view returns (address[] memory) {
         return ownerToSonikDropNativeCloneContracts[_owner];
     }
 
     /// @notice Retrieves all SonikDropNative clones created through this factory
     /// @return Array of addresses of all SonikDropNative clones
-    function getAllSonikDropNativeClones()
-        external
-        view
-        returns (address[] memory)
-    {
+    function getAllSonikDropNativeClones() external view returns (address[] memory) {
         return allSonikDropNativeClones;
     }
 }

@@ -9,19 +9,22 @@
 
 ### Verified Contracts
 - **AirdropFactoryFacet**  
-  Deployed at: `0xcc80612507d2506a36e7AfcA21AD9d63BdDc1F4A`
+  Deployed at: `0x0e7BbDeF95A4e796BF007Fe96DCc229Afe9Ee2f9`
 - **PoapFactoryFacet**  
-  Deployed at: `0x04f0985918eE7E6B9DB2D216ce359d8c9a3A313A`
+  Deployed at: `0xFAC46B15ad5930229Cb5b78577e10A73E00Aed1e`
+- **FactoryFacetNative**  
+  Deployed at: `0x4C2098fe9E74108E94E02d566139CcE6C6521c25`
 
  
 
 
+<!-- 
 ### Verified Contracts for kairos
 >> createX is not avaliable on kairos
 - **AirdropFactoryFacet**  
   Deployed at: `0x64Aa1f6657F93D17Bc6c11Cb2BF732c39031e064`
 - **PoapFactoryFacet**  
-  Deployed at: `0x49947BE492E984940Eb361C9CB3d43C2dAa87823`
+  Deployed at: `0x49947BE492E984940Eb361C9CB3d43C2dAa87823` -->
 
 
 

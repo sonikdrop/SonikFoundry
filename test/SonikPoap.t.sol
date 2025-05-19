@@ -23,24 +23,14 @@ contract SonikPoapFacetTest is GetProof {
     address badUser;
     uint256 keybadUser;
     address owner;
-    bytes32 merkleRoot =
-        0xd8e222b40239d64a7db7ecda5afc3c65bf70597764a238cca5adf9d7356a9887;
+    bytes32 merkleRoot = 0xd8e222b40239d64a7db7ecda5afc3c65bf70597764a238cca5adf9d7356a9887;
     bytes32 hash = keccak256("claimed sonik droppppppppppp");
     string baseURI = "https://sonik.com/";
 
     function setUp() public {
         owner = msg.sender;
-        sonikPoapFacet = new SonikPoapFacet(
-            "TESTNFT",
-            "TNFT",
-            baseURI,
-            msg.sender,
-            merkleRoot,
-            address(0),
-            0,
-            10,
-            false
-        );
+        sonikPoapFacet =
+            new SonikPoapFacet("TESTNFT", "TNFT", baseURI, msg.sender, merkleRoot, address(0), 0, 10, false);
         testERC721 = new TestERC721();
         (user1, keyUser1) = makeAddrAndKey("user1");
         (user2, keyUser2) = makeAddrAndKey("user2");

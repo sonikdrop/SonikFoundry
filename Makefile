@@ -15,7 +15,7 @@ deploy-blaze:
 	@forge script script/deploy.s.sol:SoniKDeployer \
 		--rpc-url $(BLAZE_RPC_URL) \
 		--private-key $(private_key) \
-		--etherscan-api-key $(ETHERSCAN_API_KEY) \
+		--etherscan-api-key $(SONICBLAST_API_KEY) \
 		--verify \
 		--broadcast
 

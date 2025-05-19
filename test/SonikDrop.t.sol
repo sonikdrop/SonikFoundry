@@ -26,23 +26,13 @@ contract SonikDropTest is GetProof {
     address badUser;
     uint256 keybadUser;
     address owner;
-    bytes32 merkleRoot =
-        0x95d6e8d85e932a1fb33f70a0b15e42ab823ffc4e34a7e53c602529c2478cd823;
+    bytes32 merkleRoot = 0x95d6e8d85e932a1fb33f70a0b15e42ab823ffc4e34a7e53c602529c2478cd823;
     bytes32 hash = keccak256("claimed sonik droppppppppppp");
 
     function setUp() public {
         owner = msg.sender;
         testToken = new TestERC20();
-        sonikDrop = new SonikDrop(
-            msg.sender,
-            address(testToken),
-            merkleRoot,
-            "test ",
-            address(0),
-            0,
-            10,
-            25 ether
-        );
+        sonikDrop = new SonikDrop(msg.sender, address(testToken), merkleRoot, "test ", address(0), 0, 10, 25 ether);
         emit log_address(owner);
         testToken.transfer(address(sonikDrop), 25 ether);
         (user1, keyUser1) = makeAddrAndKey("user1");
@@ -158,9 +148,7 @@ contract SonikDropTest is GetProof {
         test_claimAirdrop();
 
         // Attempt to claim more than the available balance
-        vm.expectRevert(
-            abi.encodeWithSignature("InsufficientContractBalance()")
-        );
+        vm.expectRevert(abi.encodeWithSignature("InsufficientContractBalance()"));
         vm.startPrank(user2);
         bytes32[] memory proof = getProof(user2);
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(keyUser2, hash);
