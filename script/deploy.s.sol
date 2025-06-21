@@ -14,9 +14,9 @@ contract SoniKDeployer is Script {
     PoapFactoryFacet poapFactoryFacet;
     FactoryFacetNative factoryFacetNative;
 
-    bytes32 constant SALT_AIRDROP = keccak256("SonikDropAirdropFactoryFacet");
-    bytes32 constant SALT_POAP = keccak256("SonikDropPoapFactoryFacet");
-    bytes32 constant SALT_NATIVE = keccak256("SonikDropFactoryFacetNative");
+    bytes32 constant SALT_AIRDROP = keccak256("SonikDroAirdropFactoryFacet");
+    bytes32 constant SALT_POAP = keccak256("SonikDropPopFactoryFacet");
+    bytes32 constant SALT_NATIVE = keccak256("SonikDroFactoryFacetNative");
 
     function run() external {
         vm.startBroadcast();

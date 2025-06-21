@@ -104,7 +104,7 @@ contract SonikPoapFacetTest is GetProof {
         bytes memory signature = get_signa(keyUser1);
 
         vm.startPrank(user1);
-        sonikPoapFacet.claimAirdrop(proof, hash, signature);
+        sonikPoapFacet.claimAirdrop(proof);
         vm.stopPrank();
         assert(sonikPoapFacet.balanceOf(user1) > 0);
     }
@@ -114,7 +114,7 @@ contract SonikPoapFacetTest is GetProof {
         bytes memory signature = get_signa(keybadUser);
         vm.startPrank(badUser);
         vm.expectRevert(abi.encodeWithSignature("InvalidClaim()"));
-        sonikPoapFacet.claimAirdrop(proof, hash, signature);
+        sonikPoapFacet.claimAirdrop(proof);
         vm.stopPrank();
     }
 
@@ -122,9 +122,9 @@ contract SonikPoapFacetTest is GetProof {
         bytes32[] memory proof = getProofPoap(user1);
         bytes memory signature = get_signa(keyUser1);
         vm.startPrank(user1);
-        sonikPoapFacet.claimAirdrop(proof, hash, signature);
+        sonikPoapFacet.claimAirdrop(proof);
         vm.expectRevert(abi.encodeWithSignature("InvalidClaim()"));
-        sonikPoapFacet.claimAirdrop(proof, hash, signature);
+        sonikPoapFacet.claimAirdrop(proof);
         vm.stopPrank();
     }
 
@@ -144,11 +144,11 @@ contract SonikPoapFacetTest is GetProof {
     //     bytes memory signature2 = get_signa(keyUser2);
 
     //     vm.prank(user1);
-    //     sonikPoapFacet.claimAirdrop(proof, hash, signature);
+    //     sonikPoapFacet.claimAirdrop(proof);
 
     //     vm.expectRevert(abi.encodeWithSignature("TotalClaimersExceeded()"));
     //     vm.prank(user2);
-    //     sonikPoapFacet.claimAirdrop(proof2, hash, signature2);
+    //     sonikPoapFacet.claimAirdrop(proof22);
     // }
 
     function test_claimAirdropNFT_with_nft_requirement_on() public {
@@ -161,7 +161,7 @@ contract SonikPoapFacetTest is GetProof {
         bytes memory signature = get_signa(keyUser2);
         vm.startPrank(user2);
 
-        sonikPoapFacet.claimAirdrop(proof, hash, signature);
+        sonikPoapFacet.claimAirdrop(proof);
 
         vm.stopPrank();
     }
@@ -175,7 +175,7 @@ contract SonikPoapFacetTest is GetProof {
         bytes memory signature = get_signa(keyUser2);
         vm.startPrank(user2);
         vm.expectRevert(abi.encodeWithSignature("NFTNotFound()"));
-        sonikPoapFacet.claimAirdrop(proof, hash, signature);
+        sonikPoapFacet.claimAirdrop(proof);
         vm.stopPrank();
     }
 
@@ -188,7 +188,7 @@ contract SonikPoapFacetTest is GetProof {
         bytes memory signature = get_signa(keyUser1);
         vm.warp(2 days);
         vm.expectRevert(abi.encodeWithSignature("AirdropClaimEnded()"));
-        sonikPoapFacet.claimAirdrop(proof, hash, signature);
+        sonikPoapFacet.claimAirdrop(proof);
         vm.stopPrank();
     }
 }

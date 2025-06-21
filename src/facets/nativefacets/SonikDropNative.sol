@@ -130,59 +130,53 @@ contract SonikDropNative is ReentrancyGuard {
         return MerkleProof.verify(_merkleProof, merkleRoot, leaf);
     }
 
-    /// @notice Verifies user signature
-    /// @param digest Message hash to verify
-    /// @param signature Signature to verify
-    /// @return bool True if signature is valid
-    function _verifySignature(bytes32 digest, bytes memory signature) private view returns (bool) {
-        return ECDSA.recover(digest, signature) == msg.sender;
-    }
+    // /// @notice Verifies user signature
+    // /// @param digest Message hash to verify
+    // /// @param signature Signature to verify
+    // /// @return bool True if signature is valid
+    // function _verifySignature(bytes32 digest, bytes memory signature) private view returns (bool) {
+    //     return ECDSA.recover(digest, signature) == msg.sender;
+    // }
 
     /// @notice Allows users to claim their airdrop
     /// @param _amount Amount of NativeCoins to claim
     /// @param _merkleProof Proof of eligibility
-    /// @param digest Message hash for signature verification
-    /// @param signature User's signature
-    function claimAirdrop(uint256 _amount, bytes32[] calldata _merkleProof, bytes32 digest, bytes memory signature)
+   
+    function claimAirdrop(uint256 _amount, bytes32[] calldata _merkleProof)
         external
         nonReentrant
     {
         if (isNftRequired) {
-            claimAirdrop(_amount, _merkleProof, type(uint256).max, digest, signature);
+            claimAirdrop(_amount, _merkleProof, type(uint256).max);
             return;
         }
-        _claimAirdrop(_amount, _merkleProof, digest, signature);
+        _claimAirdrop(_amount, _merkleProof);
     }
     /// @notice Allows users to claim airdrop with NFT requirement
     /// @param _amount Amount of NativeCoins to claim
     /// @param _merkleProof Proof of eligibility
     /// @param _tokenId NFT NativeCoins ID (unused)
-    /// @param digest Message hash for signature verification
-    /// @param signature User's signature
 
     function claimAirdrop(
         uint256 _amount,
         bytes32[] calldata _merkleProof,
-        uint256 _tokenId,
-        bytes32 digest,
-        bytes memory signature
+        uint256 _tokenId
     ) public nonReentrant {
         require(_tokenId == type(uint256).max, Errors.InvalidTokenId());
 
         require(IERC721(nftAddress).balanceOf(msg.sender) > 0, Errors.NFTNotFound());
-        _claimAirdrop(_amount, _merkleProof, digest, signature);
+        _claimAirdrop(_amount, _merkleProof);
     }
 
     /// @notice Internal function to process airdrop claims
     /// @param _amount Amount of NativeCoins to claim
     /// @param _merkleProof Proof of eligibility
-    /// @param digest Message hash for signature verification
-    /// @param signature User's signature
-    function _claimAirdrop(uint256 _amount, bytes32[] calldata _merkleProof, bytes32 digest, bytes memory signature)
+
+    function _claimAirdrop(uint256 _amount, bytes32[] calldata _merkleProof)
         internal
     {
         // verify user signature
-        require(_verifySignature(digest, signature), Errors.InvalidSignature());
+        // require(_verifySignature(digest, signature), Errors.InvalidSignature());
 
         // checks if User is eligible
         require(checkEligibility(_amount, _merkleProof), Errors.InvalidClaim());
