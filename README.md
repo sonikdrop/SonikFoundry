@@ -15,7 +15,12 @@
 - **FactoryFacetNative**  
   Deployed at: `0x4C2098fe9E74108E94E02d566139CcE6C6521c25`
 
- 
+
+### Verified Contracts (morpho)
+- **AirdropFactoryFacet**  
+  Deployed at: `0xfaA806F972ca1fd6119c7093a60eB1C57a368286`
+- **PoapFactoryFacet**  
+  Deployed at: `0xC19094d99B72f89E48dB990a68C0f9E1857A63e4`
 
 
 <!-- 

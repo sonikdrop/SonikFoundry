@@ -54,6 +54,11 @@ module.exports = {
       chainId: 4202, 
       accounts: [process.env.private_key],
     },
+    morphTestnet: {
+      url: process.env.morphl2_RPC_URL,
+      chainId: 2810, 
+      accounts: [process.env.private_key],
+    },
   },
 
   etherscan: {
@@ -64,6 +69,7 @@ module.exports = {
       sepolia: process.env.ETHERSCAN_API_KEY,
       lisksepolia: process.env.LISK_API_KEY,
       electroneumTestnet: process.env.LISK_API_KEY,
+      morphTestnet: 'anything',
     },
     customChains: [
       {
@@ -97,6 +103,14 @@ module.exports = {
         urls: {
           apiURL: "https://api-sepolia.etherscan.io/api",
           browserURL: "https://sepolia.etherscan.io",
+        },
+      },
+      {
+        network: "morphTestnet",
+        chainId: 2810,
+        urls: {
+          apiURL: "https://explorer-api-holesky.morphl2.io/api",
+          browserURL: "https://explorer-holesky.morphl2.io/",
         },
       },
       {
