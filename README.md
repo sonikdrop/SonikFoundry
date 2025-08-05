@@ -9,11 +9,11 @@
 
 ### Verified Contracts
 - **AirdropFactoryFacet**  
-  Deployed at: `0x0e7BbDeF95A4e796BF007Fe96DCc229Afe9Ee2f9`
+  Deployed at: `0x93e630780dee3bf340bb06c1e7e1c34043954d5c`
 - **PoapFactoryFacet**  
-  Deployed at: `0xFAC46B15ad5930229Cb5b78577e10A73E00Aed1e`
+  Deployed at: `0xc102950f383bf57f59a83ca783df160629a0570d`
 - **FactoryFacetNative**  
-  Deployed at: `0x4C2098fe9E74108E94E02d566139CcE6C6521c25`
+  Deployed at: `0x24e79068ce194ffa22a97d2972b0af9c179f6687`
 
 
 ### Verified Contracts (morpho)

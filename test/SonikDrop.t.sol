@@ -112,7 +112,7 @@ contract SonikDropTest is GetProof {
         bytes memory signature = abi.encodePacked(r, s, v);
 
         vm.startPrank(user1);
-        sonikDrop.claimAirdrop(10e18, proof, hash, signature);
+        sonikDrop.claimAirdrop(10e18, proof);
         assertEq(testToken.balanceOf(user1), 10e18);
     }
 
@@ -123,11 +123,11 @@ contract SonikDropTest is GetProof {
 
         // First claim
         vm.startPrank(user1);
-        sonikDrop.claimAirdrop(10e18, proof, hash, signature);
+        sonikDrop.claimAirdrop(10e18, proof);
 
         // Attempt to claim again
         vm.expectRevert(abi.encodeWithSignature("InvalidClaim()"));
-        sonikDrop.claimAirdrop(10e18, proof, hash, signature);
+        sonikDrop.claimAirdrop(10e18, proof);
         vm.stopPrank();
     }
 
@@ -140,7 +140,7 @@ contract SonikDropTest is GetProof {
         bytes memory signature = abi.encodePacked(r, s, v);
 
         vm.expectRevert(abi.encodeWithSignature("InvalidClaim()"));
-        sonikDrop.claimAirdrop(10e18, invalidProof, hash, signature);
+        sonikDrop.claimAirdrop(10e18, invalidProof);
         vm.stopPrank();
     }
 
@@ -153,7 +153,7 @@ contract SonikDropTest is GetProof {
         bytes32[] memory proof = getProof(user2);
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(keyUser2, hash);
         bytes memory signature = abi.encodePacked(r, s, v);
-        sonikDrop.claimAirdrop(20e18, proof, hash, signature);
+        sonikDrop.claimAirdrop(20e18, proof);
         vm.stopPrank();
     }
 
@@ -171,7 +171,7 @@ contract SonikDropTest is GetProof {
         vm.warp(block.timestamp + 2 days);
         vm.expectRevert(abi.encodeWithSignature("AirdropClaimEnded()"));
 
-        sonikDrop.claimAirdrop(20e18, proof, hash, signature);
+        sonikDrop.claimAirdrop(20e18, proof);
         vm.stopPrank();
     }
 }

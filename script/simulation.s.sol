@@ -38,7 +38,7 @@ contract Runner is Script {
         proof[2] = bytes32(0x5a8ead40cd9687835259cd89e45e2781d13c6ba02e8b0a08f1be6d3f47f69f74);
 
         uint256 privateKey = vm.envUint("private_key");
-        here.claimAirdrop(proof, hash, get_signa(privateKey));
+        here.claimAirdrop(proof);
         console.log("PoapFactoryFacet deployed at:", here.ownerOf(0));
     }
 

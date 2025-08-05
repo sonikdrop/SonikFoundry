@@ -116,37 +116,34 @@ contract SonikPoapFacet is ERC721URIStorage {
 
     /// @notice Claims airdrop for eligible users
     /// @param _merkleProof Merkle proof for eligibility verification
-    /// @param digest Message digest for signature verification
-    /// @param signature User's signature
-    function claimAirdrop(bytes32[] calldata _merkleProof, bytes32 digest, bytes memory signature) external {
+
+    function claimAirdrop(bytes32[] calldata _merkleProof) external {
         if (isNftRequired) {
-            claimAirdrop(_merkleProof, type(uint256).max, digest, signature);
+            claimAirdrop(_merkleProof, type(uint256).max);
             return;
         }
-        _claimAirdrop(_merkleProof, digest, signature);
+        _claimAirdrop(_merkleProof);
     }
 
     /// @notice Claims airdrop for users who must own an NFT
     /// @param _merkleProof Merkle proof for eligibility verification
     /// @param _tokenId Token ID of the required NFT
-    /// @param digest Message digest for signature verification
-    /// @param signature User's signature
-    function claimAirdrop(bytes32[] calldata _merkleProof, uint256 _tokenId, bytes32 digest, bytes memory signature)
+
+    function claimAirdrop(bytes32[] calldata _merkleProof, uint256 _tokenId)
         public
     {
         require(_tokenId == type(uint256).max, Errors.InvalidTokenId());
 
         require(IERC721(nftAddress).balanceOf(msg.sender) > 0, Errors.NFTNotFound());
 
-        _claimAirdrop(_merkleProof, digest, signature);
+        _claimAirdrop(_merkleProof);
     }
 
     /// @notice Internal function to process airdrop claims
     /// @param _merkleProof Merkle proof for eligibility verification
-    /// @param digest Message digest for signature verification
-    /// @param signature User's signature
-    function _claimAirdrop(bytes32[] calldata _merkleProof, bytes32 digest, bytes memory signature) internal {
-        require(_verifySignature(digest, signature), Errors.InvalidSignature());
+
+    function _claimAirdrop(bytes32[] calldata _merkleProof) internal {
+        // require(_verifySignatur), Errors.InvalidSignature());
 
         require(checkEligibility(_merkleProof), Errors.InvalidClaim());
 
@@ -206,13 +203,13 @@ contract SonikPoapFacet is ERC721URIStorage {
         emit Events.ClaimTimeUpdated(msg.sender, _claimTime, airdropEndTime);
     }
 
-    /// @notice Verifies if a signature is valid
-    /// @param digest Message digest to verify
-    /// @param signature Signature to verify
-    /// @return bool True if signature is valid, false otherwise
-    function _verifySignature(bytes32 digest, bytes memory signature) private view returns (bool) {
-        return ECDSA.recover(digest, signature) == msg.sender;
-    }
+    // /// @notice Verifies if a signature is valid
+    // /// @param digest Message digest to verify
+    // /// @param signature Signature to verify
+    // /// @return bool True if signature is valid, false otherwise
+    // function _verifySignature(bytes32 digest, bytes memory signature) private view returns (bool) {
+    //     return ECDSA.recove) == msg.sender;
+    // }
 
     /// @notice Returns the token URI for a given token ID
     /// @param tokenId ID of the token
