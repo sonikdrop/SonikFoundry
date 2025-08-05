@@ -47,6 +47,18 @@ deploy-lisk-sepolia:
 		--private-key $(private_key) \
 		--broadcast
 
+# Deploy to morphTestnet
+deploy-morphTestnet:
+	@forge script script/deploy.s.sol:SoniKDeployer \
+		--rpc-url $(morphl2_RPC_URL) \
+		--chain-id 2810 \
+		--etherscan-api-key 123 \
+		--verify \
+		--verifier blockscout \
+		--verifier-url https://explorer-api-holesky.morphl2.io/api \
+		--private-key $(private_key) \
+		--broadcast
+
 # Deploy to Kairos
 deploy-kairos:
 	@forge script script/deploy.s.sol:SoniKDeployer \

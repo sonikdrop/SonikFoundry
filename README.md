@@ -4,6 +4,7 @@
 - **Kaia (Kaia Testnet / Kairos)**
 - **ETH Sepolia**
 - **Sonic Blaze Testnet**
+- **Morpho Holesky**
 
 
 
@@ -18,9 +19,9 @@
 
 ### Verified Contracts (morpho)
 - **AirdropFactoryFacet**  
-  Deployed at: `0xfaA806F972ca1fd6119c7093a60eB1C57a368286`
+  Deployed at: `0x2d5Ec45908eB52ab1cF06AA9A77069dDE8CC87C4`
 - **PoapFactoryFacet**  
-  Deployed at: `0xC19094d99B72f89E48dB990a68C0f9E1857A63e4`
+  Deployed at: `0x2804B7a514D2d26135D3A954eb62dc4bE9E228fA`
 
 
 <!-- 
