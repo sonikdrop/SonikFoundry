@@ -55,7 +55,7 @@ deploy-morphTestnet:
 		--etherscan-api-key 123 \
 		--verify \
 		--verifier blockscout \
-		--verifier-url https://explorer-api-holesky.morphl2.io/api \
+		--verifier-url https://explorer-holesky.morphl2.io/api \
 		--private-key $(private_key) \
 		--broadcast
 

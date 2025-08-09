@@ -19,9 +19,10 @@
 
 ### Verified Contracts (morpho)
 - **AirdropFactoryFacet**  
-  Deployed at: `0x2d5Ec45908eB52ab1cF06AA9A77069dDE8CC87C4`
+  Deployed at: `0x84Fef3F2eb720ae467Ee75B4A03Ce665831965B6`
 - **PoapFactoryFacet**  
-  Deployed at: `0x2804B7a514D2d26135D3A954eb62dc4bE9E228fA`
+  Deployed at: `0x1b527506391f3D272dE34C88FdAceB5221C40A50`
+
 
 
 <!-- 
