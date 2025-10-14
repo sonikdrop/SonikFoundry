@@ -1,10 +1,11 @@
 ## Deployed Contract Addresses
 ### Networks
 - **Base Sepolia**
-- **Kaia (Kaia Testnet / Kairos)**
+<!-- - **Kaia (Kaia Testnet / Kairos)** -->
 - **ETH Sepolia**
 - **Sonic Blaze Testnet**
 - **Morpho Holesky**
+- **PUSH DONUT**
 
 
 
@@ -23,7 +24,12 @@
 - **PoapFactoryFacet**  
   Deployed at: `0x1b527506391f3D272dE34C88FdAceB5221C40A50`
 
-
+### Verified Contracts for PUSH DONUT
+>> createX is not avaliable on PUSH
+- **AirdropFactoryFacet**  
+  Deployed at: `0xaB7Db3920E48622E8DcF1b39cc439020C043850a`
+- **PoapFactoryFacet**  
+  Deployed at: `0xa2b2684AD086b4847F13349013F2C04350D69fe7`
 
 <!-- 
 ### Verified Contracts for kairos
@@ -37,7 +43,7 @@
 
 
 
-### Assumptions
+<!-- ### Assumptions
 - Ethereum price is assumed to be $4000.
 - Kaia price is assumed to be $0.22.
 
@@ -57,7 +63,7 @@
 | Ethereum | 1,600,000               | 8 gwei               | 0.0128                    | $51.20                | 127,666                    | 0.001021328                  | $4.09                    |
 | Base     | 1,600,000               | 0.014530300 gwei     | 0.000023248480            | $0.093                | 127,666                    | 0.0000018551232              | $0.0074                  |
 | Lisk     | 1,600,000               | 0.014530300 gwei     | 0.000023248480            | $0.093                | 127,666                    | 0.0000018551232              | $0.0074                  |
-| Kaia     | 1,600,000               | 0.0000000275 gwei    | 0.000000044               | $0.0000352            | 127,666                    | 0.00000000351                | $0.00000281              |
+| Kaia     | 1,600,000               | 0.0000000275 gwei    | 0.000000044               | $0.0000352            | 127,666                    | 0.00000000351                | $0.00000281              | -->
 
 ## License
 This package is licensed under the MIT License. See the [LICENSE](./LICENSE.md) file for more information.

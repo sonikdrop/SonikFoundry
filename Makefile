@@ -72,5 +72,15 @@ deploy-kairos:
 		--gas-limit 17000000 \
 		--gas-price 60  \
 		--legacy
+# Deploy to PUSH DONUT
+deploy-donut-sepolia:
+	@forge script script/deploy.s.sol:SoniKDeployer \
+		--rpc-url $(Donut_RPC_URL) \
+		--etherscan-api-key 123 \
+		--verify \
+		--verifier blockscout \
+		--verifier-url https://donut.push.network/api \
+		--private-key $(private_key) \
+		--broadcast
 
 

@@ -12,6 +12,11 @@ optimizer = true
 optimizer_runs = 200
 via_ir = true
 
+[rpc_endpoints]
+push_testnet = "https://evm.rpc-testnet-donut-node1.push.org/"
+push_testnet_alt = "https://evm.rpc-testnet-donut-node2.push.org/"
+
+
 [etherscan]
 57054 = { key = "${SONICBLAST_API_KEY}", url = "https://api-testnet.sonicscan.org/api" }
 84532 = { key = "${BASESCAN_API_KEY}", url = "https://api-sepolia.basescan.org/api" }
@@ -19,3 +24,4 @@ via_ir = true
 4202 = { key = "${LISK_API_KEY}", url = "https://sepolia-blockscout.lisk.com/api" }
 11155111 = { key = "${ETHERSCAN_API_KEY}", url = "https://api-sepolia.etherscan.io/api" }
 5201420 = { key = "${ETHERSCAN_API_KEY}", url = "https://blockexplorer.thesecurityteam.rocks/api" }
+push_testnet = { key = "blockscout", url = "https://donut.push.network/api", chain = 42101 }

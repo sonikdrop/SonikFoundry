@@ -22,7 +22,11 @@ contract SoniKDeployer is Script {
         vm.startBroadcast();
 
         // Deploy facets
-        deployFacets();
+        if (block.chainid == 42101) {
+            deployFacets_withoutc2();
+        } else {
+            deployFacets();
+        }
 
         vm.stopBroadcast();
     }
@@ -35,5 +39,12 @@ contract SoniKDeployer is Script {
         console.log("PoapFactoryFacet deployed at:", address(poapFactoryFacet));
         factoryFacetNative = new FactoryFacetNative{salt: SALT_NATIVE}();
         console.log("factoryFacetNative deployed at:", address(factoryFacetNative));
+    }
+
+    function deployFacets_withoutc2() internal {
+        airdropFactoryFacet = new AirdropFactoryFacet();
+        console.log("AirdropFactoryFacet deployed at:", address(airdropFactoryFacet));
+        poapFactoryFacet = new PoapFactoryFacet();
+        console.log("PoapFactoryFacet deployed at:", address(poapFactoryFacet));
     }
 }
